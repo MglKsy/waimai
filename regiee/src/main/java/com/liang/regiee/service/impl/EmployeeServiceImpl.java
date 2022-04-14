@@ -5,6 +5,7 @@ import com.liang.regiee.common.R;
 import com.liang.regiee.entity.Employee;
 import com.liang.regiee.mapper.EmployeeMapper;
 import com.liang.regiee.service.EmployeeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 
 @Service
+@Slf4j
 public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> implements EmployeeService {
 
     @Override
@@ -36,7 +38,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
     @Override
     public R<String> logout(HttpServletRequest request) {
-        request.removeAttribute("employee");
+        request.getSession().removeAttribute("employee");
         return R.success("退出登录~");
     }
 }
