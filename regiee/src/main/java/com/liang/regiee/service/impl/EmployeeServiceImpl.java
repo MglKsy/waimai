@@ -1,11 +1,15 @@
 package com.liang.regiee.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.liang.regiee.common.R;
 import com.liang.regiee.entity.Employee;
 import com.liang.regiee.mapper.EmployeeMapper;
 import com.liang.regiee.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -36,24 +40,42 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         return R.success(emp);
 
     }
-
     @Override
     public R<String> logout(HttpServletRequest request) {
         request.getSession().removeAttribute("employee");
         return R.success("退出登录~");
     }
-
     @Override
     public R<String> saveEmployee(HttpServletRequest request, Employee employee) {
-
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes(StandardCharsets.UTF_8)));
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-
         Long empId = (Long) request.getSession().getAttribute("employee");
         employee.setCreateUser(empId);
         employee.setUpdateUser(empId);
         save(employee);
         return R.success("添加成功~~~");
     }
+    @Override
+    public R<Page> queryPage(Integer page, Integer pageSize, String name) {
+        Page pageInfo = new Page(page,pageSize);
+        LambdaQueryWrapper<Employee> lbq = new LambdaQueryWrapper<>();
+        lbq.like(StringUtils.isNotBlank(name),Employee::getName,name);
+        lbq.orderByDesc(Employee::getUpdateTime);
+        page(pageInfo,lbq);
+        return R.success(pageInfo);
+    }
+
+    @Override
+    public R<String> toUpdate(HttpServletRequest request, Employee employee) {
+        log.info("要修改的->{}",employee);
+        Long empId = (Long) request.getSession().getAttribute("employee");
+        employee.setUpdateUser(empId);
+        boolean flag = updateById(employee);
+        if (flag){
+            return R.success("员工信息修改成功");
+        }else {
+            return R.error("员工信息修改失败");
+        }
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.liang.regiee.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.liang.regiee.common.R;
 import com.liang.regiee.entity.Employee;
@@ -12,4 +13,8 @@ public interface EmployeeService extends IService<Employee> {
     R<String> logout(HttpServletRequest request);
 
     R<String> saveEmployee(HttpServletRequest request, Employee employee);
+
+    R<Page> queryPage(Integer page, Integer pageSize, String name);
+
+    R<String> toUpdate(HttpServletRequest request, Employee employee);
 }

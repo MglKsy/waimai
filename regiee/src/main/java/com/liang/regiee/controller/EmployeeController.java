@@ -1,14 +1,12 @@
 package com.liang.regiee.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liang.regiee.common.R;
 import com.liang.regiee.entity.Employee;
 import com.liang.regiee.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +34,19 @@ public class EmployeeController {
     public R<String> save(HttpServletRequest request,
                           @RequestBody Employee employee){
         return employeeService.saveEmployee(request,employee);
+    }
+
+    @GetMapping("/page")
+    public R<Page> page(@RequestParam("page") Integer page,
+                                  @RequestParam("pageSize") Integer pageSize,
+                                  @RequestParam(value = "name",required = false) String name){
+        return employeeService.queryPage(page,pageSize,name);
+    }
+
+    @PutMapping
+    public R<String> update(HttpServletRequest request,
+                            @RequestBody Employee employee){
+        return employeeService.toUpdate(request,employee);
     }
 
 }
