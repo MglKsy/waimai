@@ -32,5 +32,10 @@ public class EmployeeController {
         return employeeService.logout(request);
     }
 
+    @PostMapping
+    public R<String> save(HttpServletRequest request,
+                          @RequestBody Employee employee){
+        return employeeService.saveEmployee(request,employee);
+    }
 
 }
