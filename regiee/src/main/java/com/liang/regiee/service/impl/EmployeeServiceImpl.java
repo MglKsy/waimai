@@ -51,9 +51,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     public R<String> saveEmployee(HttpServletRequest request, Employee employee) {
         log.info("新增员工线程id---->{}",Thread.currentThread().getId());
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes(StandardCharsets.UTF_8)));
-        Long empId = (Long) request.getSession().getAttribute("employee");
-        employee.setCreateUser(empId);
-        employee.setUpdateUser(empId);
+
         save(employee);
         return R.success("添加成功~~~");
     }
@@ -71,8 +69,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     @Override
     public R<String> toUpdate(HttpServletRequest request, Employee employee) {
         log.info("更新员工线程id---->{}",Thread.currentThread().getId());
-        Long empId = (Long) request.getSession().getAttribute("employee");
-        employee.setUpdateUser(empId);
+
         boolean flag = updateById(employee);
         if (flag){
             return R.success("员工信息修改成功");
