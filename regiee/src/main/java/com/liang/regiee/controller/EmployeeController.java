@@ -53,4 +53,8 @@ public class EmployeeController {
         return R.success(employeeService.getById(id));
     }
 
+    @DeleteMapping("/{id}")
+    public R<String> deleteById(@PathVariable("id")Long id){
+        return employeeService.deleteById(id);
+    }
 }

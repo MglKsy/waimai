@@ -186,7 +186,8 @@
               'cancelButtonText': '取消',
               'type': 'warning'
               }).then(() => {
-              enableOrDisableEmployee({ 'id': this.id, 'status': !this.status ? 1 : 0 }).then(res => {
+              enableOrDisableEmployee({ 'id': this.id, 'status': !this.status ? 1 : 0 })
+                      .then(res => {
                 console.log('enableOrDisableEmployee',res)
                 if (String(res.code) === '1') {
                   this.$message.success(res.data)
@@ -208,7 +209,21 @@
             this.init()
           },
           deleteEmployee(id){
-            console.log(id);
+            this.$confirm('确认删除?', '提示', {
+              'confirmButtonText': '确定',
+              'cancelButtonText': '取消',
+              'type': 'warning'
+            }).then(()=>{
+                delEmployee(id).then(res => {
+                  if (String(res.code)=== '1'){
+                    this.$message.success(res.data)
+                    this.handleQuery()
+                  }else
+                    this.$message.error(res.msg)
+                }).catch(()=>{
+                  this.$message.error("未知错误啊啊啊")
+                })
+            })
           }
         }
       })

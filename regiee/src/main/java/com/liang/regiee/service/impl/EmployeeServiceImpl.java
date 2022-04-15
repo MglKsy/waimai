@@ -78,5 +78,15 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         }
     }
 
+    @Override
+    public R<String> deleteById(Long id) {
+        boolean flag = removeById(id);
+        if (flag){
+            return R.success("删除成功啦~");
+        }else {
+            return R.error("删除失败啦~");
+        }
+    }
+
 
 }

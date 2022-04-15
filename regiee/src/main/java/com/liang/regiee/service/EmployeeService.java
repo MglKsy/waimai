@@ -17,4 +17,6 @@ public interface EmployeeService extends IService<Employee> {
     R<Page<Employee>> queryPage(Integer page, Integer pageSize, String name);
 
     R<String> toUpdate(HttpServletRequest request, Employee employee);
+
+    R<String> deleteById(Long id);
 }

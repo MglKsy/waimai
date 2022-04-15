@@ -24,6 +24,15 @@ function addEmployee (params) {
   })
 }
 
+// 删除员工
+function delEmployee(id){
+  return $axios({
+    url: `/employee/${id}`,
+    method: "delete",
+    data: {id}
+  })
+}
+
 // 修改---添加员工
 function editEmployee (params) {
   return $axios({
