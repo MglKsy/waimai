@@ -23,6 +23,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
     @Override
     public R<Employee> login(HttpServletRequest request, Employee employee) {
+
         String username = employee.getUsername();
         String password = employee.getPassword();
         password = DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8));
@@ -42,11 +43,13 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     }
     @Override
     public R<String> logout(HttpServletRequest request) {
+
         request.getSession().removeAttribute("employee");
         return R.success("退出登录~");
     }
     @Override
     public R<String> saveEmployee(HttpServletRequest request, Employee employee) {
+        log.info("新增员工线程id---->{}",Thread.currentThread().getId());
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes(StandardCharsets.UTF_8)));
         Long empId = (Long) request.getSession().getAttribute("employee");
         employee.setCreateUser(empId);
@@ -56,6 +59,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     }
     @Override
     public R<Page> queryPage(Integer page, Integer pageSize, String name) {
+        log.info("分页查询线程id---->{}",Thread.currentThread().getId());
         Page pageInfo = new Page(page,pageSize);
         LambdaQueryWrapper<Employee> lbq = new LambdaQueryWrapper<>();
         lbq.like(StringUtils.isNotBlank(name),Employee::getName,name);
@@ -66,7 +70,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
     @Override
     public R<String> toUpdate(HttpServletRequest request, Employee employee) {
-        log.info("要修改的->{}",employee);
+        log.info("更新员工线程id---->{}",Thread.currentThread().getId());
         Long empId = (Long) request.getSession().getAttribute("employee");
         employee.setUpdateUser(empId);
         boolean flag = updateById(employee);

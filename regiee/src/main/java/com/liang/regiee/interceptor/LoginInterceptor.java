@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+        log.info("拦截器线程id---->{}",Thread.currentThread().getId());
         if (request.getSession().getAttribute("employee")!=null){
             return true;
         }

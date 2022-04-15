@@ -48,5 +48,9 @@ public class EmployeeController {
                             @RequestBody Employee employee){
         return employeeService.toUpdate(request,employee);
     }
+    @GetMapping("/{id}")
+    public R<Employee> queryById(@PathVariable("id")Long id){
+        return R.success(employeeService.getById(id));
+    }
 
 }
