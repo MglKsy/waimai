@@ -56,9 +56,9 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         return R.success("添加成功~~~");
     }
     @Override
-    public R<Page> queryPage(Integer page, Integer pageSize, String name) {
+    public R<Page<Employee>> queryPage(Integer page, Integer pageSize, String name) {
         log.info("分页查询线程id---->{}",Thread.currentThread().getId());
-        Page pageInfo = new Page(page,pageSize);
+        Page<Employee> pageInfo = new Page<Employee>(page,pageSize);
         LambdaQueryWrapper<Employee> lbq = new LambdaQueryWrapper<>();
         lbq.like(StringUtils.isNotBlank(name),Employee::getName,name);
         lbq.orderByDesc(Employee::getUpdateTime);

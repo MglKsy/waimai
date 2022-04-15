@@ -87,6 +87,16 @@
             >
               {{ scope.row.status == '1' ? '禁用' : '启用' }}
             </el-button>
+            <el-button
+                    type="text"
+                    size="small"
+                    class="delBut non"
+                    @click="deleteEmployee(scope.row.id)"
+                    v-if="user === 'admin'"
+            >
+              删除
+            </el-button>
+
           </template>
         </el-table-column>
       </el-table>
@@ -196,6 +206,9 @@
           handleCurrentChange (val) {
             this.page = val
             this.init()
+          },
+          deleteEmployee(id){
+            console.log(id);
           }
         }
       })

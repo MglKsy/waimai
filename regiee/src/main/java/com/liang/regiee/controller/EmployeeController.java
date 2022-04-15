@@ -37,7 +37,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/page")
-    public R<Page> page(@RequestParam("page") Integer page,
+    public R<Page<Employee>> page(@RequestParam("page") Integer page,
                                   @RequestParam("pageSize") Integer pageSize,
                                   @RequestParam(value = "name",required = false) String name){
         return employeeService.queryPage(page,pageSize,name);
