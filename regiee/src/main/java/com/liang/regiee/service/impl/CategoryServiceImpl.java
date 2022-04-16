@@ -1,5 +1,6 @@
 package com.liang.regiee.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.liang.regiee.common.R;
@@ -15,8 +16,10 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     @Override
     public R<Page<Category>> queryPage(Integer page, Integer pageSize) {
-        Page<Category> pageInfo = new Page<>(page,pageSize);
-        page(pageInfo);
-        return R.success(pageInfo);
+        LambdaQueryWrapper<Category> lbq = new LambdaQueryWrapper<>();
+        lbq.orderByAsc(Category::getSort);
+        Page<Category> categoryPage = new Page<>(page, pageSize);
+        page(categoryPage,lbq);
+        return R.success(categoryPage);
     }
 }
