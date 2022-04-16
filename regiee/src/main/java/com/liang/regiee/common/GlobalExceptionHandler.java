@@ -15,7 +15,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public R<String> SQLIntegrityConstraintViolationExceptionHandler(SQLIntegrityConstraintViolationException e){
+    public R<String> exceptionHandler(SQLIntegrityConstraintViolationException e){
         log.info("错误信息:{}",e.getMessage());
         if (e.getMessage().contains("Duplicate")){
             String[] strings = e.getMessage().split(" ");
@@ -24,5 +24,10 @@ public class GlobalExceptionHandler {
         }
 
         return R.error("未知错误");
+    }
+    @ExceptionHandler(CustomException.class)
+    public R<String> exceptionHandler(CustomException e){
+        log.error(e.getMessage());
+        return R.error(e.getMessage());
     }
 }

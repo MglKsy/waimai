@@ -19,7 +19,8 @@ public class WebConfig implements WebMvcConfigurer {
                 "/employee/login",
                 "/employee/logout",
                 "/backend/**",
-                "/front/**"
+                "/front/**",
+                "/common/**"
         };
         LoginInterceptor loginInterceptor = new LoginInterceptor();
         registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns(urls);

@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-
+@Slf4j
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
@@ -39,5 +39,12 @@ public class CategoryController {
         }else {
             return R.error("修改分类失败");
         }
+    }
+
+    @DeleteMapping
+    public R<String> delete(@RequestParam(value = "ids",required = false)Long id){
+        log.info("要删除的分类id----->{}",id);
+        log.info("缓冲");
+        return categoryService.delete(id);
     }
 }

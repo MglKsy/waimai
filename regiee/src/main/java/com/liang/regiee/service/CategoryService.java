@@ -7,4 +7,6 @@ import com.liang.regiee.entity.Category;
 
 public interface CategoryService extends IService<Category> {
     R<Page<Category>> queryPage(Integer page, Integer pageSize);
+
+    R<String> delete(Long id);
 }
