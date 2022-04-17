@@ -52,10 +52,7 @@ public class CategoryController {
     }
 
     @GetMapping("/list")
-    public R<List<Category>> list(@RequestParam("type") Integer type){
-        LambdaQueryWrapper<Category> lqb = new LambdaQueryWrapper<>();
-        lqb.eq(Category::getType,type);
-        List<Category> list = categoryService.list(lqb);
-        return R.success(list);
+    public R<List<Category>> list(Category category){
+        return categoryService.listCategory(category);
     }
 }
