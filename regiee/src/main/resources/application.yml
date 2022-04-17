@@ -17,3 +17,5 @@ mybatis-plus:
     db-config:
       id-type: assign_id
 
+regiee:
+  path: /Users/mlovek/Projects/IdeaProjects/waimai/regiee/src/main/resources/static/backend/testImages/
