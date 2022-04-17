@@ -17,11 +17,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements DishService {
+    @Resource
+    private DishMapper dishMapper;
 
     @Resource
     private DishFlavorMapper dishFlavorMapper;
@@ -119,5 +122,21 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
         }
 
         return R.success("修改信息成功");
+    }
+
+    @Override
+    public R<String> updateDishStatusToZero(ArrayList<Long> ids) {
+        for (Long id : ids) {
+            dishMapper.updateToZero(id);
+        }
+        return R.success("成功停售");
+    }
+
+    @Override
+    public R<String> updateDishStatusToOne(ArrayList<Long> ids) {
+        for (Long id : ids) {
+            dishMapper.updateToOne(id);
+        }
+        return R.success("成功起售");
     }
 }

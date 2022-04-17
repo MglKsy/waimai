@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.print.attribute.standard.MediaSize;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -43,4 +45,23 @@ public class DishController {
         log.info(dishDto.toString());
         return dishService.updateDish(dishDto);
     }
+
+    @DeleteMapping
+    public R<String> deleteById(@RequestParam("ids") ArrayList<Long> ids){
+        dishService.removeBatchByIds(ids);
+        return R.success("删除成功");
+    }
+
+    @PostMapping("/status/0")
+    public R<String> updateDishStatusToZero(@RequestParam("ids")ArrayList<Long> ids){
+
+        return dishService.updateDishStatusToZero(ids);
+    }
+
+    @PostMapping("/status/1")
+    public R<String> updateDishStatusToOne(@RequestParam("ids")ArrayList<Long> ids){
+
+        return dishService.updateDishStatusToOne(ids);
+    }
+
 }

@@ -6,6 +6,8 @@ import com.liang.regiee.common.R;
 import com.liang.regiee.dto.DishDto;
 import com.liang.regiee.entity.Dish;
 
+import java.util.ArrayList;
+
 public interface DishService extends IService<Dish> {
     R<String> saveDishWithDishFlavor(DishDto dishDto);
 
@@ -14,4 +16,8 @@ public interface DishService extends IService<Dish> {
     R<DishDto> getDishDtoById(Long id);
 
     R<String> updateDish(DishDto dishDto);
+
+    R<String> updateDishStatusToZero(ArrayList<Long> ids);
+
+    R<String> updateDishStatusToOne(ArrayList<Long> ids);
 }
