@@ -1,6 +1,7 @@
 package com.liang.regiee.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.liang.regiee.common.R;
 import com.liang.regiee.dto.DishDto;
@@ -10,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.print.attribute.standard.MediaSize;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +62,14 @@ public class DishController {
     public R<String> updateDishStatusToOne(@RequestParam("ids")ArrayList<Long> ids){
 
         return dishService.updateDishStatusToOne(ids);
+    }
+
+    @GetMapping("/list")
+    public R<List<Dish>> listDishByCategoryId(@RequestParam("categoryId")Long id){
+        LambdaQueryWrapper<Dish> dishLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        dishLambdaQueryWrapper.eq(Dish::getCategoryId,id).orderByDesc(Dish::getUpdateTime);
+        dishLambdaQueryWrapper.orderByAsc(Dish::getSort).eq(Dish::getStatus,1);
+        return R.success(dishService.list(dishLambdaQueryWrapper));
     }
 
 }
